@@ -2,7 +2,7 @@ import streamlit as st
 import joblib
 import pandas as pd
 
-st.write("# Small Loan Prediction")
+st.write("# Small Loan Prediction") 
 
 col1, col2, col3 = st.columns(3)
 
