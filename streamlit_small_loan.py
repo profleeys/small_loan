@@ -24,7 +24,7 @@ df_pred.replace({'YES':1, 'NO':0, 'M': 1, 'F': 0}, inplace=True)
 df_pred = pd.get_dummies(df_pred, prefix=['region', 'children'], prefix_sep='_', columns=['region', 'children'])
 
 # File upload widget
-uploaded_file = st.file_uploader("Choose a model:")
+uploaded_file = st.file_uploader("Upload your .pkl file", type=['pkl'])
 
 if uploaded_file is not None:
     model = joblib.load(uploaded_file)
