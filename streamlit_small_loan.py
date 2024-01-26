@@ -23,16 +23,20 @@ df_pred = pd.DataFrame([[age,sex,region,income,married,children,car,save_act,cur
 df_pred.replace({'YES':1, 'NO':0, 'M': 1, 'F': 0}, inplace=True)
 df_pred = pd.get_dummies(df_pred, prefix=['region', 'children'], prefix_sep='_', columns=['region', 'children'])
 
-#model = joblib.load('small_loan_rf_model.pkl')
+# File upload widget
+uploaded_file = st.file_uploader("Choose a model:")
 
-# Need this part, otherwise the number of attributes are not consistent with the model
-#missing_cols = [c for c in model.feature_names_in_ if c not in df_pred.columns]
-#for c in missing_cols:
-#    df_pred[c] = 0
-#df_pred = df_pred[model.feature_names_in_]
+if uploaded_file is not None:
+    model = joblib.load(uploaded_file)
 
-#prediction = model.predict(df_pred)
-#prediction_prob = model.predict_proba(df_pred)
+    # Need this part, otherwise the number of attributes are not consistent with the model
+    missing_cols = [c for c in model.feature_names_in_ if c not in df_pred.columns]
+    for c in missing_cols:
+        df_pred[c] = 0
+    df_pred = df_pred[model.feature_names_in_]
+
+    prediction = model.predict(df_pred)
+    prediction_prob = model.predict_proba(df_pred)
 
 if st.button('預測'):
     if(prediction[0]==0):
